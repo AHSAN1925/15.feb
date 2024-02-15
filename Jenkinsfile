@@ -12,7 +12,7 @@ pipeline {
         stage('Run Docker Container') {
             steps {
                 // Docker container run karein
-                sh 'docker run -itd --name ahsanarif -p 8080:80 my-image'
+                sh 'docker run -itd --name ahsanarif -p 8082:81 my-image'
             }
         }
     }
