@@ -2,36 +2,18 @@ pipeline {
     agent any
     
     stages {
-        stage('Build') {
+        stage('Build Docker Image') {
             steps {
-                sh 'echo "Building..."'
-                sh 'mvn clean package'
+                // Docker image build karein
+                sh 'docker build -t my-image .'
             }
         }
-        stage('Test') {
+        
+        stage('Run Docker Container') {
             steps {
-                sh 'echo "Testing..."'
-                sh 'mvn test'
+                // Docker container run karein
+                sh 'docker run -itd --name ahsanarif -p 8080:80 my-image'
             }
-        }
-        stage('Deploy') {
-            steps {
-                sh 'echo "Deploying..."'
-                // Add deployment steps here
-            }
-        }
-    }
-    
-    post {
-        success {
-            slackSend channel: '#builds',
-                      color: 'good',
-                      message: "Build successful! :tada:"
-        }
-        failure {
-            slackSend channel: '#builds',
-                      color: 'danger',
-                      message: "Build failed! :x:"
         }
     }
 }
